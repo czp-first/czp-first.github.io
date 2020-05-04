@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="Asia/Shanghai">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"czp-first.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="drf框架知识点123456789&quot;&quot;&quot;1、接口：什么是接口，restful接口规范2、CBV生命周期源码 - 基于restful规范下的CBV接口3、请求组件、解析组件、响应组件4、序列化组件(灵魂)5、三大认证(重中之重)：认证、权限（权限六表）、频率6、其他组件：过滤、筛选、排序、分页、路由&quot;&quot;&quot;难点：源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="drf">
+<meta property="og:url" content="https://czp-first.github.io/2020/05/05/drf/index.html">
+<meta property="og:site_name" content="czp_first">
+<meta property="og:description" content="drf框架知识点123456789&quot;&quot;&quot;1、接口：什么是接口，restful接口规范2、CBV生命周期源码 - 基于restful规范下的CBV接口3、请求组件、解析组件、响应组件4、序列化组件(灵魂)5、三大认证(重中之重)：认证、权限（权限六表）、频率6、其他组件：过滤、筛选、排序、分页、路由&quot;&quot;&quot;难点：源码分析">
+<meta property="article:published_time" content="2020-05-04T16:38:05.000Z">
+<meta property="article:modified_time" content="2020-05-04T17:51:34.000Z">
+<meta property="article:author" content="czp">
+<meta property="article:tag" content="drf">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://czp-first.github.io/2020/05/05/drf/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'Asia/Shanghai'
+  };
+</script>
+
+  <title>drf | czp_first</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">czp_first</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">gogogo</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="Asia/Shanghai">
+    <link itemprop="mainEntityOfPage" href="https://czp-first.github.io/2020/05/05/drf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/kobe.jpeg">
+      <meta itemprop="name" content="czp">
+      <meta itemprop="description" content="To Be Better">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="czp_first">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          drf
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-05-05 00:38:05 / Modified: 01:51:34" itemprop="dateCreated datePublished" datetime="2020-05-05T00:38:05+08:00">2020-05-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">python后端</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="drf框架"><a href="#drf框架" class="headerlink" title="drf框架"></a>drf框架</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1、接口：什么是接口，restful接口规范</span></span><br><span class="line"><span class="string">2、CBV生命周期源码 - 基于restful规范下的CBV接口</span></span><br><span class="line"><span class="string">3、请求组件、解析组件、响应组件</span></span><br><span class="line"><span class="string">4、序列化组件(灵魂)</span></span><br><span class="line"><span class="string">5、三大认证(重中之重)：认证、权限（权限六表）、频率</span></span><br><span class="line"><span class="string">6、其他组件：过滤、筛选、排序、分页、路由</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">难点：源码分析</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">web接口组成</span></span><br><span class="line"><span class="string">	url：返回数据的url链接</span></span><br><span class="line"><span class="string">	请求参数：前端按照指定的key提供数据给后端</span></span><br><span class="line"><span class="string">	响应数据：后端与数据库交互后将数据反馈给前端</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="restful接口规范"><a href="#restful接口规范" class="headerlink" title="restful接口规范"></a>restful接口规范</h2><p>接口规范：就是为了采用不同的后端语言，也能使用同样的接口获取到同样的数据</p>
+<p>如何写接口：接口规范是规范书写接口的，写接口要写url、响应数据</p>
+<p>​    注：如果将请求参数也纳入考量范围，那就是在写接口文档</p>
+<p>两大部分</p>
+<ul>
+<li><p>url</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1) 用api关键字标识接口url</span><br><span class="line">	api.baidu.com | www.baidu.com&#x2F;api</span><br><span class="line"></span><br><span class="line">2)接口数据安全性决定优先选择https协议</span><br><span class="line"></span><br><span class="line">3)如果一个接口有多版本存在，需要在url中标识体现</span><br><span class="line">	api.baidu.com&#x2F;v1&#x2F;... | api.baidu.com&#x2F;v2&#x2F;...</span><br><span class="line">	</span><br><span class="line">4)接口操作的数据源称之为资源，在url中一般采用资源复数形式，一个接口可以概括对该资源的多种操作方式</span><br><span class="line">	api.baidu.com&#x2F;books | api.baidu.com&#x2F;books&#x2F;pk</span><br><span class="line">	</span><br><span class="line">5)请求方式有多种，用一个url处理如何保证不混乱 - 通过请求方式标识操作资源的方式</span><br><span class="line">	&#x2F;books	get	获取所有</span><br><span class="line">	&#x2F;books	post	增加一个(多个)</span><br><span class="line">	&#x2F;books&#x2F;pk	delete	删除一个</span><br><span class="line">	&#x2F;books&#x2F;pk	put	整体更新一个</span><br><span class="line">	&#x2F;books&#x2F;pk	patch	局部更新一个</span><br><span class="line">	</span><br><span class="line">6)资源往往设计数据的各种操作方式 - 筛选、排序、限制</span><br><span class="line">	api.baidu.com&#x2F;books?search&#x3D;dd&amp;ordering&#x3D;-price&amp;limit&#x3D;4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>响应数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1)http请求的响应会有响应状态码，接口用来返回操作的资源数据，可以拥有操作数据接口的状态码</span><br><span class="line">	status 0(操作资源成功) 1(资源操作失败) 2(操作资源成功，但没匹配结果)</span><br><span class="line">	注：资源状态码不像http状态码，一般都是后端与前端或客户约定的</span><br><span class="line">	</span><br><span class="line">2)资源的状态码文字提示</span><br><span class="line">	msg ok &quot;dd&quot; &quot;zz&quot;</span><br><span class="line">	</span><br><span class="line">3)资源本身</span><br><span class="line">	results</span><br><span class="line"></span><br><span class="line">4)不能直接返回的资源(子资源、图片、视频等资源)，返回该资源的url链接</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="DRF框架"><a href="#DRF框架" class="headerlink" title="DRF框架"></a>DRF框架</h2><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework</span><br></pre></td></tr></table></figure>
+
+<p>drf请求生命周期</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1. 请求的是APIView的as_view函数</span></span><br><span class="line"><span class="string">2. 在APIView的as_view调用父类(django原生)的as_view，还禁用了csrf认证</span></span><br><span class="line"><span class="string">3. 在父类的as_view中dispatch分发请求走的又是APIView的dispatch</span></span><br><span class="line"><span class="string">4. 完成任务分发交给视图类的请求函数处理，得到请求的响应结果，返回给前台</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>重点是APIView的dispatch</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dispatch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    `.dispatch()` is pretty much the same as Django's regular dispatch,</span></span><br><span class="line"><span class="string">    but with extra hooks for startup, finalize, and exception handling.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    self.args = args</span><br><span class="line">    self.kwargs = kwargs</span><br><span class="line">    <span class="comment"># 请求模块（包含解析模块）</span></span><br><span class="line">    request = self.initialize_request(request, *args, **kwargs)</span><br><span class="line">    self.request = request</span><br><span class="line">    self.headers = self.default_response_headers  <span class="comment"># deprecate?</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">      	<span class="comment"># 三大认证模块</span></span><br><span class="line">        self.initial(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Get the appropriate handler method</span></span><br><span class="line">        <span class="keyword">if</span> request.method.lower() <span class="keyword">in</span> self.http_method_names:</span><br><span class="line">            handler = getattr(self, request.method.lower(),</span><br><span class="line">                              self.http_method_not_allowed)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            handler = self.http_method_not_allowed</span><br><span class="line">		<span class="comment"># 响应模块</span></span><br><span class="line">        response = handler(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> exc:</span><br><span class="line">      	<span class="comment"># 异常模块</span></span><br><span class="line">        response = self.handle_exception(exc)</span><br><span class="line"><span class="comment"># 渲染模块</span></span><br><span class="line">    self.response = self.finalize_response(request, response, *args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> self.response</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="请求模块-包含解析模块"><a href="#请求模块-包含解析模块" class="headerlink" title="请求模块(包含解析模块)"></a>请求模块(包含解析模块)</h2><p>request对象</p>
+<p>源码入口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APIView类的dispatch方法，request &#x3D; self.initialize_request(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_request</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Returns the initial request object.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    parser_context = self.get_parser_context(request)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># restframework.request.Request</span></span><br><span class="line">    <span class="keyword">return</span> Request(</span><br><span class="line">        request,</span><br><span class="line">        parsers=self.get_parsers(),</span><br><span class="line">        authenticators=self.get_authenticators(),</span><br><span class="line">        negotiator=self.get_content_negotiator(),</span><br><span class="line">        parser_context=parser_context</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+
+
+<p>restframework.request.Request</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># 构造器</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, request, parsers=None, authenticators=None,</span></span></span><br><span class="line"><span class="function"><span class="params">               negotiator=None, parser_context=None)</span>:</span></span><br><span class="line">  		<span class="comment"># 断言，判断request类型</span></span><br><span class="line">      <span class="keyword">assert</span> isinstance(request, HttpRequest), (</span><br><span class="line">          <span class="string">'The `request` argument must be an instance of '</span></span><br><span class="line">          <span class="string">'`django.http.HttpRequest`, not `&#123;&#125;.&#123;&#125;`.'</span></span><br><span class="line">          .format(request.__class__.__module__, request.__class__.__name__)</span><br><span class="line">      )</span><br><span class="line">		</span><br><span class="line">      <span class="comment"># 二次封装request对象，将原生request作为 drf request对象的 _request属性</span></span><br><span class="line">      self._request = request</span><br><span class="line">      self.parsers = parsers <span class="keyword">or</span> ()</span><br><span class="line">      self.authenticators = authenticators <span class="keyword">or</span> ()</span><br><span class="line">      self.negotiator = negotiator <span class="keyword">or</span> self._default_negotiator()</span><br><span class="line">      self.parser_context = parser_context</span><br><span class="line">      self._data = Empty</span><br><span class="line">      self._files = Empty</span><br><span class="line">      self._full_data = Empty</span><br><span class="line">      self._content_type = Empty</span><br><span class="line">      self._stream = Empty</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> self.parser_context <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">          self.parser_context = &#123;&#125;</span><br><span class="line">      self.parser_context[<span class="string">'request'</span>] = self</span><br><span class="line">      self.parser_context[<span class="string">'encoding'</span>] = request.encoding <span class="keyword">or</span> settings.DEFAULT_CHARSET</span><br><span class="line"></span><br><span class="line">      force_user = getattr(request, <span class="string">'_force_auth_user'</span>, <span class="literal">None</span>)</span><br><span class="line">      force_token = getattr(request, <span class="string">'_force_auth_token'</span>, <span class="literal">None</span>)</span><br><span class="line">      <span class="keyword">if</span> force_user <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">or</span> force_token <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">          forced_auth = ForcedAuthentication(force_user, force_token)</span><br><span class="line">          self.authenticators = (forced_auth,)</span><br><span class="line">          </span><br><span class="line">  <span class="comment"># 完全兼容 原生django的request</span></span><br><span class="line">  <span class="comment"># 举例</span></span><br><span class="line">  <span class="comment"># 在drf中get请求传递的参数可以通过三种方式获取</span></span><br><span class="line">  <span class="comment"># request._request.GET(二次封装方式), request.GET(兼容), request.query_params(拓展)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, attr)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">      If an attribute does not exist on this instance, then we also attempt</span></span><br><span class="line"><span class="string">      to proxy it to the underlying HttpRequest object.</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">      <span class="keyword">try</span>:</span><br><span class="line">          <span class="keyword">return</span> getattr(self._request, attr)</span><br><span class="line">      <span class="keyword">except</span> AttributeError:</span><br><span class="line">          <span class="keyword">return</span> self.__getattribute__(attr)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>post、patch、put方法传递的参数被解析成 drf中的request.data</p>
+<p>get方法传递的参数被解析成 drf中的 request.query_params</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="comment"># url拼接的参数：只有一种传参方式</span></span><br><span class="line">    print(request._request.GET) <span class="comment"># 二次封装方式</span></span><br><span class="line">    print(request.GET)  <span class="comment"># 兼容</span></span><br><span class="line">    print(request.query_params)  <span class="comment"># 拓展</span></span><br><span class="line">    <span class="keyword">return</span> Response(<span class="string">""</span>)</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="comment"># 所有请求方式携带的数据包</span></span><br><span class="line">    <span class="comment"># 数据包参数：有三种传参方式</span></span><br><span class="line">    <span class="comment"># form-data x-www-form-urlencoded json</span></span><br><span class="line">    print(request._request.POST) <span class="comment"># 二次封装方式 form-data x-www-form-urlencoded</span></span><br><span class="line">    print(request.POST)  <span class="comment"># 兼容 form-data x-www-form-urlencoded</span></span><br><span class="line">    print(request.data)  <span class="comment"># 拓展 form-data x-www-form-urlencoded json</span></span><br><span class="line">    <span class="keyword">return</span> Response(<span class="string">""</span>)</span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<ol>
+<li>drf对原生request进行了二次封装，request._request就是原生的request</li>
+<li>原生request对象的属性和方法都可以被drf的request对象直接访问(兼容)</li>
+<li>drf请求的所有url拼接参数均被解析到query_params中，所有数据包数据都被解析到data中</li>
+<li>get请求中不可以提交数据包；post请求中可以提交url拼接参数</li>
+</ol>
+<p>重点：</p>
+<ol>
+<li>request完全兼容_request</li>
+<li>data/query_params</li>
+</ol>
+<h2 id="渲染模块"><a href="#渲染模块" class="headerlink" title="渲染模块"></a>渲染模块</h2><p>浏览器和postman请求结果渲染数据的方式不一样</p>
+<p>入口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APIView类的dispatch方法，self.response &#x3D; self.finalize_response(request, response, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># rest_framework.views.APIView</span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">finalize_response</span><span class="params">(self, request, response, *args, **kwargs)</span>:</span></span><br><span class="line">     <span class="string">"""</span></span><br><span class="line"><span class="string">     Returns the final response object.</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">     <span class="comment"># Make the error obvious if a proper response is not returned</span></span><br><span class="line">     <span class="keyword">assert</span> isinstance(response, HttpResponseBase), (</span><br><span class="line">         <span class="string">'Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` '</span></span><br><span class="line">         <span class="string">'to be returned from the view, but received a `%s`'</span></span><br><span class="line">         % type(response)</span><br><span class="line">     )</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> isinstance(response, Response):</span><br><span class="line">         <span class="keyword">if</span> <span class="keyword">not</span> getattr(request, <span class="string">'accepted_renderer'</span>, <span class="literal">None</span>):</span><br><span class="line">             neg = self.perform_content_negotiation(request, force=<span class="literal">True</span>)</span><br><span class="line">             request.accepted_renderer, request.accepted_media_type = neg</span><br><span class="line"></span><br><span class="line">         response.accepted_renderer = request.accepted_renderer</span><br><span class="line">         response.accepted_media_type = request.accepted_media_type</span><br><span class="line">         response.renderer_context = self.get_renderer_context()</span><br><span class="line"></span><br><span class="line">     <span class="comment"># Add new vary headers to the response instead of overwriting.</span></span><br><span class="line">     vary_headers = self.headers.pop(<span class="string">'Vary'</span>, <span class="literal">None</span>)</span><br><span class="line">     <span class="keyword">if</span> vary_headers <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">         patch_vary_headers(response, cc_delim_re.split(vary_headers))</span><br><span class="line"></span><br><span class="line">     <span class="keyword">for</span> key, value <span class="keyword">in</span> self.headers.items():</span><br><span class="line">         response[key] = value</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> response</span><br><span class="line">  </span><br><span class="line"> <span class="comment"># neg = self.perform_content_negotiation(request, force=True)</span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">perform_content_negotiation</span><span class="params">(self, request, force=False)</span>:</span></span><br><span class="line">     <span class="string">"""</span></span><br><span class="line"><span class="string">     Determine which renderer and media type to use render the response.</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">     renderers = self.get_renderers()</span><br><span class="line">     conneg = self.get_content_negotiator()</span><br><span class="line"></span><br><span class="line">     <span class="keyword">try</span>:</span><br><span class="line">         <span class="keyword">return</span> conneg.select_renderer(request, renderers, self.format_kwarg)</span><br><span class="line">     <span class="keyword">except</span> Exception:</span><br><span class="line">         <span class="keyword">if</span> force:</span><br><span class="line">             <span class="keyword">return</span> (renderers[<span class="number">0</span>], renderers[<span class="number">0</span>].media_type)</span><br><span class="line">         <span class="keyword">raise</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment"># renderers = self.get_renderers()</span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">get_renderers</span><span class="params">(self)</span>:</span></span><br><span class="line">     <span class="string">"""</span></span><br><span class="line"><span class="string">     Instantiates and returns the list of renderers that this view can use.</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">     <span class="keyword">return</span> [renderer() <span class="keyword">for</span> renderer <span class="keyword">in</span> self.renderer_classes]</span><br><span class="line">   </span><br><span class="line"> <span class="comment"># self.renderer_classes</span></span><br><span class="line"> <span class="comment"># APIView 的类属性：局部配置</span></span><br><span class="line"> renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES</span><br><span class="line"> </span><br><span class="line"> <span class="comment"># api_settings.DEFAULT_RENDERER_CLASSES</span></span><br><span class="line"> <span class="comment"># rest_framework.settings</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>重点：</p>
+<ol>
+<li><p>response数据json/browser两种渲染方式</p>
+</li>
+<li><p>全局配置/局部配置</p>
+<p>自定义视图类(局部) =》APIView视图类 =〉自定义drf配置(全局) =》drf默认配置(全局)</p>
+</li>
+</ol>
+<h2 id="解析模块"><a href="#解析模块" class="headerlink" title="解析模块"></a>解析模块</h2><p>源码入口</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># APIView类的dispatch方法中: request = self.initialize_request(request, *args, **kwargs)</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize_request</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Returns the initial request object.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 准备要解析的数据</span></span><br><span class="line">        parser_context = self.get_parser_context(request)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Request(</span><br><span class="line">            request,</span><br><span class="line">          	<span class="comment"># 获取解析类</span></span><br><span class="line">            parsers=self.get_parsers(),</span><br><span class="line">            authenticators=self.get_authenticators(),</span><br><span class="line">            negotiator=self.get_content_negotiator(),</span><br><span class="line">            parser_context=parser_context</span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># parser_context = self.get_parser_context(request)</span></span><br><span class="line">    <span class="comment"># 准备要解析的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_parser_context</span><span class="params">(self, http_request)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Returns a dict that is passed through to Parser.parse(),</span></span><br><span class="line"><span class="string">        as the `parser_context` keyword argument.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># Note: Additionally `request` and `encoding` will also be added</span></span><br><span class="line">        <span class="comment">#       to the context by the Request object.</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="string">'view'</span>: self,</span><br><span class="line">            <span class="string">'args'</span>: getattr(self, <span class="string">'args'</span>, ()),</span><br><span class="line">            <span class="string">'kwargs'</span>: getattr(self, <span class="string">'kwargs'</span>, &#123;&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># parsers=self.get_parsers()</span></span><br><span class="line">    <span class="comment"># 获取数据包的解析器</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_parsers</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Instantiates and returns the list of parsers that this view can use.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> [parser() <span class="keyword">for</span> parser <span class="keyword">in</span> self.parser_classes]</span><br><span class="line">      </span><br><span class="line">    <span class="comment"># self.parser_classes</span></span><br><span class="line">    <span class="comment"># APIView 的类属性: 局部配置</span></span><br><span class="line">    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># api_settings.DEFAULT_PARSER_CLASSES</span></span><br><span class="line">    <span class="comment"># rest_framework.settings</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="异常模块"><a href="#异常模块" class="headerlink" title="异常模块"></a>异常模块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">dispatch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">      `.dispatch()` is pretty much the same as Django's regular dispatch,</span></span><br><span class="line"><span class="string">      but with extra hooks for startup, finalize, and exception handling.</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">      self.args = args</span><br><span class="line">      self.kwargs = kwargs</span><br><span class="line">      request = self.initialize_request(request, *args, **kwargs)</span><br><span class="line">      self.request = request</span><br><span class="line">      self.headers = self.default_response_headers  <span class="comment"># deprecate?</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span>:</span><br><span class="line">          self.initial(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">          <span class="comment"># Get the appropriate handler method</span></span><br><span class="line">          <span class="keyword">if</span> request.method.lower() <span class="keyword">in</span> self.http_method_names:</span><br><span class="line">              handler = getattr(self, request.method.lower(),</span><br><span class="line">                                self.http_method_not_allowed)</span><br><span class="line">          <span class="keyword">else</span>:</span><br><span class="line">              handler = self.http_method_not_allowed</span><br><span class="line"></span><br><span class="line">          response = handler(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">except</span> Exception <span class="keyword">as</span> exc:</span><br><span class="line">          response = self.handle_exception(exc)</span><br><span class="line"></span><br><span class="line">      self.response = self.finalize_response(request, response, *args, **kwargs)</span><br><span class="line">      <span class="keyword">return</span> self.response</span><br><span class="line">    </span><br><span class="line"><span class="comment"># response = handler(request, *args, **kwargs)</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">handle_exception</span><span class="params">(self, exc)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">      Handle any exception that occurs, by returning an appropriate response,</span></span><br><span class="line"><span class="string">      or re-raising the error.</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">      <span class="keyword">if</span> isinstance(exc, (exceptions.NotAuthenticated,</span><br><span class="line">                          exceptions.AuthenticationFailed)):</span><br><span class="line">          <span class="comment"># WWW-Authenticate header for 401 responses, else coerce to 403</span></span><br><span class="line">          auth_header = self.get_authenticate_header(self.request)</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> auth_header:</span><br><span class="line">              exc.auth_header = auth_header</span><br><span class="line">          <span class="keyword">else</span>:</span><br><span class="line">              exc.status_code = status.HTTP_403_FORBIDDEN</span><br><span class="line">		</span><br><span class="line">      <span class="comment"># 获取处理异常的句柄(方法)</span></span><br><span class="line">      exception_handler = self.get_exception_handler()</span><br><span class="line"></span><br><span class="line">      context = self.get_exception_handler_context()</span><br><span class="line">      <span class="comment"># 处理异常的结果</span></span><br><span class="line">      <span class="comment"># 自定义异常就是提供exception_handler异常处理函数，处理的目的就是让response一定有值</span></span><br><span class="line">      response = exception_handler(exc, context)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> response <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        	<span class="comment"># 没有异常内容，抛出异常信息</span></span><br><span class="line">          self.raise_uncaught_exception(exc)</span><br><span class="line"></span><br><span class="line">      response.exception = <span class="literal">True</span></span><br><span class="line">      <span class="comment"># 有异常内容，返回异常内容</span></span><br><span class="line">      <span class="keyword">return</span> response</span><br><span class="line">    </span><br><span class="line">  <span class="comment"># exception_handler = self.get_exception_handler()</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_exception_handler</span><span class="params">(self)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">      Returns the exception handler that this view uses.</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">      <span class="keyword">return</span> self.settings.EXCEPTION_HANDLER</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># context = self.get_exception_handler_context()</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_exception_handler_context</span><span class="params">(self)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">          Returns a dict that is passed through to EXCEPTION_HANDLER,</span></span><br><span class="line"><span class="string">          as the `context` argument.</span></span><br><span class="line"><span class="string">          """</span></span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">'view'</span>: self,</span><br><span class="line">        <span class="string">'args'</span>: getattr(self, <span class="string">'args'</span>, ()),</span><br><span class="line">        <span class="string">'kwargs'</span>: getattr(self, <span class="string">'kwargs'</span>, &#123;&#125;),</span><br><span class="line">        <span class="string">'request'</span>: getattr(self, <span class="string">'request'</span>, <span class="literal">None</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">  <span class="comment"># self.raise_uncaught_exception(exc)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">raise_uncaught_exception</span><span class="params">(self, exc)</span>:</span></span><br><span class="line">      <span class="keyword">if</span> settings.DEBUG:</span><br><span class="line">          request = self.request</span><br><span class="line">          renderer_format = getattr(request.accepted_renderer, <span class="string">'format'</span>)</span><br><span class="line">          use_plaintext_traceback = renderer_format <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">'html'</span>, <span class="string">'api'</span>, <span class="string">'admin'</span>)</span><br><span class="line">          request.force_plaintext_errors(use_plaintext_traceback)</span><br><span class="line">      <span class="keyword">raise</span> exc</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="异常处理器"><a href="#异常处理器" class="headerlink" title="异常处理器"></a>异常处理器</h3><h4 id="drf默认的异常处理器"><a href="#drf默认的异常处理器" class="headerlink" title="drf默认的异常处理器"></a>drf默认的异常处理器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># drf默认的异常处理器</span></span><br><span class="line">REST_FRAMEWROK = &#123;</span><br><span class="line">  <span class="string">'EXCEPTION_HANDLER'</span>: <span class="string">'rest_framework.views.exception_handler'</span>,</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exception_handler</span><span class="params">(exc, context)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Returns the response that should be used for any given exception.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    By default we handle the REST framework `APIException`, and also</span></span><br><span class="line"><span class="string">    Django's built-in `Http404` and `PermissionDenied` exceptions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Any unhandled exceptions may return `None`, which will cause a 500 error</span></span><br><span class="line"><span class="string">    to be raised.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(exc, Http404):</span><br><span class="line">        exc = exceptions.NotFound()</span><br><span class="line">    <span class="keyword">elif</span> isinstance(exc, PermissionDenied):</span><br><span class="line">        exc = exceptions.PermissionDenied()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isinstance(exc, exceptions.APIException):</span><br><span class="line">        headers = &#123;&#125;</span><br><span class="line">        <span class="keyword">if</span> getattr(exc, <span class="string">'auth_header'</span>, <span class="literal">None</span>):</span><br><span class="line">            headers[<span class="string">'WWW-Authenticate'</span>] = exc.auth_header</span><br><span class="line">        <span class="keyword">if</span> getattr(exc, <span class="string">'wait'</span>, <span class="literal">None</span>):</span><br><span class="line">            headers[<span class="string">'Retry-After'</span>] = <span class="string">'%d'</span> % exc.wait</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> isinstance(exc.detail, (list, dict)):</span><br><span class="line">            data = exc.detail</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            data = &#123;<span class="string">'detail'</span>: exc.detail&#125;</span><br><span class="line"></span><br><span class="line">        set_rollback()</span><br><span class="line">        <span class="keyword">return</span> Response(data, status=exc.status_code, headers=headers)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义异常处理器"><a href="#自定义异常处理器" class="headerlink" title="自定义异常处理器"></a>自定义异常处理器</h4><p>自定义exception_handler函数如何书写实现体</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自定义</span></span><br><span class="line"><span class="comment"># 1）先将异常处理交给rest_framework.views的exception_handler去处理</span></span><br><span class="line"><span class="comment"># 2）判断处理的结果(返回值)response，有值代表drf已经处理了，None代表需要自己处理</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置</span></span><br><span class="line">REST_FRAMEWROK = &#123;</span><br><span class="line">  <span class="string">'EXCEPTION_HANDLER'</span>: <span class="string">'路径'</span>,</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> exception_handler <span class="keyword">as</span> drf_exception_handler</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exception_handler</span><span class="params">(exc, context)</span>:</span></span><br><span class="line">  <span class="comment"># drf的exception_handler做基础处理</span></span><br><span class="line">  response = drf_exception_handler(exc, context)</span><br><span class="line">  <span class="comment"># 为空，自定义二次处理</span></span><br><span class="line">  <span class="keyword">if</span> response <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    print(exc)</span><br><span class="line">    print(context)</span><br><span class="line">    <span class="keyword">return</span> Response(&#123;<span class="string">"detail"</span>: <span class="string">"服务器错误"</span>&#125;)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="几种异常"><a href="#几种异常" class="headerlink" title="几种异常"></a>几种异常</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 被处理过的异常</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"detail"</span>: <span class="string">"不支持请求中的媒体类型 “multipart/form-data; boundary=--------------------------045036571786369327287531”。"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"detail"</span>: <span class="string">"方法 “PUT” 不被允许。"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--未被处理的异常--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Page not found at /mamba/te<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"robots"</span> <span class="attr">content</span>=<span class="string">"NONE,NOARCHIVE"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">html</span> * &#123; <span class="attribute">padding</span>:<span class="number">0</span>; <span class="attribute">margin</span>:<span class="number">0</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span> * &#123; <span class="attribute">padding</span>:<span class="number">10px</span> <span class="number">20px</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span> * * &#123; <span class="attribute">padding</span>:<span class="number">0</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span> &#123; <span class="attribute">font</span>:small sans-serif; <span class="attribute">background</span>:<span class="number">#eee</span>; <span class="attribute">color</span>:<span class="number">#000</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span>&gt;<span class="selector-tag">div</span> &#123; <span class="attribute">border-bottom</span>:<span class="number">1px</span> solid <span class="number">#ddd</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">h1</span> &#123; <span class="attribute">font-weight</span>:normal; <span class="attribute">margin-bottom</span>:.<span class="number">4em</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">h1</span> <span class="selector-tag">span</span> &#123; <span class="attribute">font-size</span>:<span class="number">60%</span>; <span class="attribute">color</span>:<span class="number">#666</span>; <span class="attribute">font-weight</span>:normal; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">table</span> &#123; <span class="attribute">border</span>:none; <span class="attribute">border-collapse</span>: collapse; <span class="attribute">width</span>:<span class="number">100%</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">td</span>, <span class="selector-tag">th</span> &#123; <span class="attribute">vertical-align</span>:top; <span class="attribute">padding</span>:<span class="number">2px</span> <span class="number">3px</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">th</span> &#123; <span class="attribute">width</span>:<span class="number">12em</span>; <span class="attribute">text-align</span>:right; <span class="attribute">color</span>:<span class="number">#666</span>; <span class="attribute">padding-right</span>:.<span class="number">5em</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#info</span> &#123; <span class="attribute">background</span>:<span class="number">#f6f6f6</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#info</span> <span class="selector-tag">ol</span> &#123; <span class="attribute">margin</span>: <span class="number">0.5em</span> <span class="number">4em</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#info</span> <span class="selector-tag">ol</span> <span class="selector-tag">li</span> &#123; <span class="attribute">font-family</span>: monospace; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#summary</span> &#123; <span class="attribute">background</span>: <span class="number">#ffc</span>; &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-id">#explanation</span> &#123; <span class="attribute">background</span>:<span class="number">#eee</span>; <span class="attribute">border-bottom</span>: <span class="number">0px</span> none; &#125;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"summary"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Page not found </span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>(404)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"meta"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Request Method:<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>GET<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Request URL:<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">td</span>&gt;</span>http://localhost:8000/mamba/te<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"info"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      Using the URLconf defined in </span><br><span class="line">                <span class="tag">&lt;<span class="name">code</span>&gt;</span>kobe.urls<span class="tag">&lt;/<span class="name">code</span>&gt;</span>,</span><br><span class="line">      Django tried these URL patterns, in this order:</span><br><span class="line">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                admin/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                xadmin/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                mamba/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                test</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                mamba/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                ^injury$</span><br><span class="line">                [name='injury-list']</span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                mamba/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                ^injury/(?P<span class="symbol">&amp;lt;</span>pk<span class="symbol">&amp;gt;</span>[^/.]+)$</span><br><span class="line">                [name='injury-detail']</span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                mamba/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                ^competition$</span><br><span class="line">                [name='competition-list']</span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">                mamba/</span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            </span><br><span class="line">                ^competition/(?P<span class="symbol">&amp;lt;</span>pk<span class="symbol">&amp;gt;</span>[^/.]+)$</span><br><span class="line">                [name='competition-detail']</span><br><span class="line">            </span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        The current path, </span><br><span class="line">                <span class="tag">&lt;<span class="name">code</span>&gt;</span>mamba/te<span class="tag">&lt;/<span class="name">code</span>&gt;</span>, didn't match any of these.</span><br><span class="line">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"explanation"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      You're seeing this error because you have </span><br><span class="line">                <span class="tag">&lt;<span class="name">code</span>&gt;</span>DEBUG = True<span class="tag">&lt;/<span class="name">code</span>&gt;</span> in</span><br><span class="line">      your Django settings file. Change that to</span><br><span class="line">                <span class="tag">&lt;<span class="name">code</span>&gt;</span>False<span class="tag">&lt;/<span class="name">code</span>&gt;</span>, and Django</span><br><span class="line">      will display a standard 404 page.</span><br><span class="line">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 错误栈形式的异常</span><br></pre></td></tr></table></figure>
+
+
+
+<p>为什么要自定义异常模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1）为所有经过drf的APIView视图类产生的异常，提供异常处理方案</span></span><br><span class="line"><span class="string">2）drf默认提供了异常处理方案(rest_framework.views.exception_handler)，但是处理范围有限</span></span><br><span class="line"><span class="string">3）drf提供的处理方案有两种，处理了返回的异常现象，没处理返回None(后续就是服务器抛异常给前台)</span></span><br><span class="line"><span class="string">4）自定义异常的目的就是解决drf没有处理的异常，让前台得到合理的异常信息返回，后台记录异常具体信息</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="响应模块"><a href="#响应模块" class="headerlink" title="响应模块"></a>响应模块</h2><p>响应类构造器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data=None, status=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 template_name=None, headers=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 exception=False, content_type=None)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param data: 响应数据</span></span><br><span class="line"><span class="string">    :param status: http响应状态码</span></span><br><span class="line"><span class="string">    :param template_name: drf也可以渲染页面，渲染的页面模版地址</span></span><br><span class="line"><span class="string">    :param headers: 响应头</span></span><br><span class="line"><span class="string">    :param exception: 是否异常了</span></span><br><span class="line"><span class="string">    :param content_type: 响应的数据格式（一般不用处理，响应头中带了，默认是json）</span></span><br><span class="line"><span class="string">    """</span></span><br></pre></td></tr></table></figure>
+
+<p>常规实例化响应对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> status</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> Response(data=&#123;数据&#125;, status=status.HTTP_200_OK, headers=&#123;设置的响应头&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="序列化组件"><a href="#序列化组件" class="headerlink" title="序列化组件"></a>序列化组件</h2><p>Serializer(偏底层)、ModelSerializer(重点)、ListModelSerializer(辅助群改)</p>
+<h3 id="Serializer"><a href="#Serializer" class="headerlink" title="Serializer"></a>Serializer</h3><p>模型层：models</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    SEX_CHOICES = &#123;</span><br><span class="line">        <span class="number">0</span>: <span class="string">"男"</span>,</span><br><span class="line">        <span class="number">1</span>: <span class="string">"女"</span></span><br><span class="line">    &#125;</span><br><span class="line">    name = models.CharField(max_length=<span class="number">64</span>)</span><br><span class="line">    pwd = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    phone = models.CharField(max_length=<span class="number">11</span>, null=<span class="literal">True</span>, default=<span class="literal">None</span>)</span><br><span class="line">    sex = models.IntegerField(choices=SEX_CHOICES.items(), default=<span class="number">0</span>)</span><br><span class="line">    icon = models.ImageField(upload_to=<span class="string">"icon"</span>, default=<span class="string">"icon/default.jpeg"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        db_table = <span class="string">"demo_user"</span></span><br><span class="line">        verbose_name = <span class="string">"用户"</span></span><br><span class="line">        verbose_name_plural = verbose_name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f"<span class="subst">&#123;self.name&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>序列化器：Serializer</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 序列化组件 - 为每一个model类提供一套序列化工具类</span></span><br><span class="line"><span class="comment"># 序列化组件的工作方式与django forms组件非常相似</span></span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers, exceptions</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="comment"># 序列化</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    name = serializers.CharField()</span><br><span class="line">    phone = serializers.CharField()</span><br><span class="line">    <span class="comment"># 序列化提供给前台的字段个数由后台决定，可以少提供，但是提供的数据库对应的字段，名字一定要与数据库字段相同</span></span><br><span class="line">    <span class="comment"># sex = serializers.IntegerField()</span></span><br><span class="line">    <span class="comment"># icon = serializers.ImageField()</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 自定义序列化属性</span></span><br><span class="line">    <span class="comment"># 属性名随意，值由固定的命名规范方法提供：</span></span><br><span class="line">    <span class="comment">#       get_属性名(self, 参与序列化的model对象)</span></span><br><span class="line">    <span class="comment">#       返回值就是自定义序列化属性的值</span></span><br><span class="line">    gender = serializers.SerializerMethodField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_gender</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="comment"># choic类型的解释型值， get_字段_display() 来访问</span></span><br><span class="line">        <span class="keyword">return</span> obj.get_sex_display()</span><br><span class="line"></span><br><span class="line">    icon = serializers.SerializerMethodField()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_icon</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="comment"># obj.icon不能直接作为数据返回，因为内容虽然是字符串，但是类型是ImageFieldFile类型</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"%s%s%s"</span> % (<span class="string">r"http://127.0.0.1"</span>, settings.MEDIA_URL, str(obj.icon))</span><br><span class="line">     </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 反序列化</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserDeserializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    <span class="comment"># 1）哪些字段必须反序列化</span></span><br><span class="line">    <span class="comment"># 2）字段都有哪些安全校验</span></span><br><span class="line">    <span class="comment"># 3）哪些字段需要额外提供校验</span></span><br><span class="line">    <span class="comment"># 4）哪些字段间存在联合校验</span></span><br><span class="line">    <span class="comment"># 注：反序列化字段都是用来入库的，不会出现自定义方法属性，会出现可以设置校验规则的自定义属性(re_pwd)</span></span><br><span class="line">    name = serializers.CharField(</span><br><span class="line">        max_length=<span class="number">64</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        error_messages=&#123;</span><br><span class="line">            <span class="string">"max_length"</span>: <span class="string">"太长"</span>,</span><br><span class="line">            <span class="string">"min_length"</span>: <span class="string">"太短"</span></span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    pwd = serializers.CharField()</span><br><span class="line">    phone = serializers.CharField(required=<span class="literal">False</span>)</span><br><span class="line">    sex = serializers.IntegerField(required=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 自定义有校验规则的反序列化字段</span></span><br><span class="line">    re_pwd = serializers.CharField(required=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 总结</span></span><br><span class="line">    <span class="comment"># name，pwd，re_pwd为必填字段</span></span><br><span class="line">    <span class="comment"># phone，sex为选填字段</span></span><br><span class="line">    <span class="comment"># 五个字段都必须提供完整的校验规则</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate_sex</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        print(<span class="string">"sex"</span>, value)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validated_phone</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        print(<span class="string">"phone"</span>, value)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 局部钩子 validate_要校验的字段名(self, 当前要校验的值)</span></span><br><span class="line">    <span class="comment"># 校验规则：校验通过返回原值，校验失败，抛出异常</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate_name</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="comment"># print(value)</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">"g"</span> <span class="keyword">in</span> value.lower():</span><br><span class="line">            <span class="keyword">raise</span> exceptions.ValidationError(<span class="string">"名字非法"</span>)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 全局钩子</span></span><br><span class="line">    <span class="comment"># 校验规则：校验通过返回原值，校验失败，抛出异常</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self, attrs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param attrs: 系统与局部钩子校验通过的所有数据</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        print(<span class="string">"attrs"</span>, attrs)</span><br><span class="line">        <span class="comment"># OrderedDict([('name', 'Jason'), ('pwd', '123'), ('re_pwd', '123')])</span></span><br><span class="line">        pwd = attrs.get(<span class="string">"pwd"</span>)</span><br><span class="line">        re_pwd = attrs.pop(<span class="string">"re_pwd"</span>)</span><br><span class="line">        print(<span class="string">"attrs"</span>, attrs)</span><br><span class="line">        <span class="keyword">if</span> pwd != re_pwd:</span><br><span class="line">            <span class="comment"># raise exceptions.ValidationError("两次密码不一致")</span></span><br><span class="line">            <span class="comment"># "non_field_errors": ["两次密码不一致"]</span></span><br><span class="line">            <span class="keyword">raise</span> exceptions.ValidationError(&#123;<span class="string">"pwd&amp;re_pwd"</span>: <span class="string">"两次密码不一致"</span>&#125;)</span><br><span class="line">            <span class="comment"># "pwd": ["两次密码不一致"]</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 要完成新增，需要自己重写create方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line">        print(validated_data)</span><br><span class="line">        <span class="comment"># &#123;'name': 'Jason', 'pwd': '123', 're_pwd': '123'&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 尽量在所有校验规则完毕之后，数据可以直接入库</span></span><br><span class="line">        <span class="keyword">return</span> models.User.objects.create(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 总结</span></span><br><span class="line">    <span class="comment"># 1 设置必填与选填序列化字段，设置校验规则</span></span><br><span class="line">    <span class="comment"># 2 为需要额外校验的字段提供局部钩子函数，如果该字段不入库，且不参与全局钩子校验，可以将值取出校验</span></span><br><span class="line">    <span class="comment"># 3 为有联合关系的字段们提供全局钩子函数，如果该字段不如哭，可以将值取出校验</span></span><br><span class="line">    <span class="comment"># 4 重写create方法，完成校验通过的数据入库工作，得到新增的对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>视图函数：views</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.serializers <span class="keyword">import</span> Serializer</span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Users</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        pk = kwargs.get(<span class="string">"pk"</span>)</span><br><span class="line">        <span class="keyword">if</span> pk:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 用户对象不能直接作为数据返回给前台</span></span><br><span class="line">                user_obj = User.objects.get(id=pk)</span><br><span class="line">                <span class="comment"># 序列化一下用户对象</span></span><br><span class="line">                user_ser = serializers.UserSerializer(instance=user_obj)</span><br><span class="line">                <span class="keyword">return</span> Response(&#123;</span><br><span class="line">                    <span class="string">"status"</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="string">"msg"</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="string">"results"</span>: user_ser.data</span><br><span class="line">                &#125;)</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">return</span> Response(</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="string">"status"</span>: <span class="number">2</span>,</span><br><span class="line">                        <span class="string">"msg"</span>: <span class="string">"用户不存在"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 用户对象列表(queryset)不能直接作为数据返回给前台</span></span><br><span class="line">            user_obj_list = User.objects.all()</span><br><span class="line">            <span class="comment"># 序列化一下用户对象</span></span><br><span class="line">            user_ser = serializers.UserSerializer(instance=user_obj_list, many=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;</span><br><span class="line">                <span class="string">"status"</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="string">"msg"</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="string">"results"</span>: user_ser.data</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 只考虑单增</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        request_data = request.data</span><br><span class="line">        <span class="comment"># 数据是否合法（增加对象需要一个字典数据）</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(request_data, dict) <span class="keyword">or</span> request_data == &#123;&#125;:</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;</span><br><span class="line">                <span class="string">"status"</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="string">"msg"</span>: <span class="string">"数据有误"</span></span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="comment"># 数据类型合法，但数据内容不一定合法，需要校验数据，参与反序列化的数据需要赋值给data</span></span><br><span class="line">        book_ser = serializers.UserDeserializer(data=request_data)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 序列化对象调用is_valid()完成校验，校验失败的失败信息都会被存储在序列化对象.errors</span></span><br><span class="line">        <span class="keyword">if</span> book_ser.is_valid():</span><br><span class="line">            <span class="comment"># 校验通过，完成新增</span></span><br><span class="line">            book_obj = book_ser.save()</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;</span><br><span class="line">                <span class="string">"status"</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="string">"msg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">                <span class="string">"result"</span>: serializers.UserSerializer(instance=book_obj).data</span><br><span class="line">                <span class="comment"># "result": ""</span></span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;</span><br><span class="line">                <span class="string">"status"</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="string">"msg"</span>: book_ser.errors</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 总结</span></span><br><span class="line">        <span class="comment"># 1 book_ser = serializers.UserDeserializer(data=request_data)  数据必须赋值data</span></span><br><span class="line">        <span class="comment"># 2 book_ser.is_valid()  结果为通过|不通过</span></span><br><span class="line">        <span class="comment"># 3 不通过返回book_ser.errors 给前台，通过 book_ser.save() 得到新增的对象，再正常返回</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ModelSerializer"><a href="#ModelSerializer" class="headerlink" title="ModelSerializer"></a>ModelSerializer</h3><p>模型层：models.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseModel</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">  is_delete = models.BookleanField(default=<span class="literal">False</span>)</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">    abstract = <span class="literal">True</span>  <span class="comment"># 重点</span></span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">  name = models.CharField(max_length=<span class="number">64</span>)</span><br><span class="line">  </span><br><span class="line"><span class="meta">  @property</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_name</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="comment"># 自定义字段：可以联表，可以完成数据相关的逻辑</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'插拔式字段的值'</span></span><br></pre></td></tr></table></figure>
+
+<p>序列化器：serializers.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CarModelSerializer</span><span class="params">(ModelSerializer)</span>:</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">		model = models.Car</span><br><span class="line">		fields = (<span class="string">"name"</span>,)</span><br><span class="line">    extra_kwargs = &#123;</span><br><span class="line">      <span class="string">"name"</span>: &#123;</span><br><span class="line">        <span class="string">"write_only|read_only"</span>: <span class="literal">True</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment"># 局部钩子、全局钩子</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>视图：views.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ser_obj = CarModelSerializer()  <span class="comment"># 产生序列化类对象(可能参与序列化，也可能参与反序列化)</span></span><br><span class="line">ser_obj.is_valid()  <span class="comment"># 启动序列化校验规则(系统内容=》局部钩子=〉全局钩子)</span></span><br><span class="line">ser_obj.data. <span class="comment"># 序列化的数据</span></span><br><span class="line">ser_obj.save()  <span class="comment"># 序列化校验后的数据操作(保存、修改)</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="drf配置"><a href="#drf配置" class="headerlink" title="drf配置"></a>drf配置</h2><p>在setting.py 中配置REST_FRAMEWORK，完成的是全局配置，所有接口统一处理</p>
+<p>如果只有部分接口特殊化，可以完成局部配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">  	<span class="comment"># drf提供的渲染类</span></span><br><span class="line">  	<span class="comment"># 局部配置：renderer_classes = []</span></span><br><span class="line">    <span class="string">'DEFAULT_RENDERER_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.renderers.JSONRenderer'</span>,</span><br><span class="line">        <span class="string">'rest_framework.renderers.BrowsableAPIRenderer'</span>,  <span class="comment"># drf的页面渲染</span></span><br><span class="line">    ],</span><br><span class="line">  	</span><br><span class="line">  	<span class="comment"># drf提供的数据包的解析类</span></span><br><span class="line">  	<span class="comment"># 局部配置: parser_classes = []</span></span><br><span class="line">    <span class="string">'DEFAULT_PARSER_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.parsers.JSONParser'</span>,</span><br><span class="line">        <span class="string">'rest_framework.parsers.FormParser'</span>,</span><br><span class="line">        <span class="string">'rest_framework.parsers.MultiPartParser'</span>,</span><br><span class="line">    ],</span><br><span class="line">  </span><br><span class="line">  	<span class="comment"># drf默认的异常处理器</span></span><br><span class="line">  	<span class="string">'EXCEPTION_HANDLER'</span>: <span class="string">'rest_framework.views.exception_handler'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>对象找属性，先找自己的，在找自己类的，再找父类的</p>
+
+    </div>
+
+    
+    
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>czp
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://czp-first.github.io/2020/05/05/drf/" title="drf">https://czp-first.github.io/2020/05/05/drf/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/drf/" rel="tag"># drf</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/02/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/05/celery/" rel="next" title="celery">
+      celery <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#drf框架"><span class="nav-number">1.</span> <span class="nav-text">drf框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#知识点"><span class="nav-number">1.1.</span> <span class="nav-text">知识点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">1.2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#restful接口规范"><span class="nav-number">1.3.</span> <span class="nav-text">restful接口规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DRF框架"><span class="nav-number">1.4.</span> <span class="nav-text">DRF框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求模块-包含解析模块"><span class="nav-number">1.5.</span> <span class="nav-text">请求模块(包含解析模块)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#渲染模块"><span class="nav-number">1.6.</span> <span class="nav-text">渲染模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析模块"><span class="nav-number">1.7.</span> <span class="nav-text">解析模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常模块"><span class="nav-number">1.8.</span> <span class="nav-text">异常模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理器"><span class="nav-number">1.8.1.</span> <span class="nav-text">异常处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#drf默认的异常处理器"><span class="nav-number">1.8.1.1.</span> <span class="nav-text">drf默认的异常处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义异常处理器"><span class="nav-number">1.8.1.2.</span> <span class="nav-text">自定义异常处理器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几种异常"><span class="nav-number">1.8.2.</span> <span class="nav-text">几种异常</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应模块"><span class="nav-number">1.9.</span> <span class="nav-text">响应模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化组件"><span class="nav-number">1.10.</span> <span class="nav-text">序列化组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializer"><span class="nav-number">1.10.1.</span> <span class="nav-text">Serializer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ModelSerializer"><span class="nav-number">1.10.2.</span> <span class="nav-text">ModelSerializer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#drf配置"><span class="nav-number">1.11.</span> <span class="nav-text">drf配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.12.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="czp"
+      src="/images/kobe.jpeg">
+  <p class="site-author-name" itemprop="name">czp</p>
+  <div class="site-description" itemprop="description">To Be Better</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+    <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34383253&auto=1&height=66"></iframe>
+    </div>
+  </aside>
+  
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">czp</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+
+</html>
