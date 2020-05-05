@@ -20,18 +20,19 @@
     var CONFIG = {"hostname":"czp-first.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="To Be Better">
+  <meta name="description" content="多线程和多进程进程和线程一个程序至少有一个进程，一个进程至少有一个线程。 进程就是一个应用程序在处理机上的一次执行过程，它是一个动态的概念，而线程是进程中的一部分，进程包含多个线程在运行。 多线程可以共享全局变量，多进程不能。 多线程中，所有子线程的进程号相同；多进程中，不同的子进程的进程号不同。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python基础">
-<meta property="og:url" content="https://czp-first.github.io/2020/05/05/python%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="多线程和多进程">
+<meta property="og:url" content="https://czp-first.github.io/2020/05/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E8%BF%9B%E7%A8%8B/index.html">
 <meta property="og:site_name" content="czp_first">
-<meta property="og:description" content="To Be Better">
-<meta property="article:published_time" content="2020-05-04T17:38:39.000Z">
-<meta property="article:modified_time" content="2020-05-04T17:38:39.000Z">
+<meta property="og:description" content="多线程和多进程进程和线程一个程序至少有一个进程，一个进程至少有一个线程。 进程就是一个应用程序在处理机上的一次执行过程，它是一个动态的概念，而线程是进程中的一部分，进程包含多个线程在运行。 多线程可以共享全局变量，多进程不能。 多线程中，所有子线程的进程号相同；多进程中，不同的子进程的进程号不同。">
+<meta property="article:published_time" content="2020-05-05T14:37:56.000Z">
+<meta property="article:modified_time" content="2020-05-05T14:39:10.000Z">
 <meta property="article:author" content="czp">
+<meta property="article:tag" content="计算机基础">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://czp-first.github.io/2020/05/05/python%E5%9F%BA%E7%A1%80/">
+<link rel="canonical" href="https://czp-first.github.io/2020/05/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E8%BF%9B%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -44,7 +45,7 @@
   };
 </script>
 
-  <title>python基础 | czp_first</title>
+  <title>多线程和多进程 | czp_first</title>
   
 
 
@@ -124,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">2</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">3</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">3</span></a>
 
   </li>
   </ul>
@@ -165,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="Asia/Shanghai">
-    <link itemprop="mainEntityOfPage" href="https://czp-first.github.io/2020/05/05/python%E5%9F%BA%E7%A1%80/">
+    <link itemprop="mainEntityOfPage" href="https://czp-first.github.io/2020/05/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E8%BF%9B%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/kobe.jpeg">
@@ -178,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          python基础
+          多线程和多进程
         </h1>
 
         <div class="post-meta">
@@ -187,8 +188,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-05-05 01:38:39" itemprop="dateCreated datePublished" datetime="2020-05-05T01:38:39+08:00">2020-05-05</time>
+              <time title="Created: 2020-05-05 22:37:56 / Modified: 22:39:10" itemprop="dateCreated datePublished" datetime="2020-05-05T22:37:56+08:00">2020-05-05</time>
             </span>
 
           
@@ -209,7 +211,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="多线程和多进程"><a href="#多线程和多进程" class="headerlink" title="多线程和多进程"></a>多线程和多进程</h1><h2 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h2><p>一个程序至少有一个进程，一个进程至少有一个线程。</p>
+<p>进程就是一个应用程序在处理机上的一次执行过程，它是一个动态的概念，而线程是进程中的一部分，进程包含多个线程在运行。</p>
+<p>多线程可以共享全局变量，多进程不能。</p>
+<p>多线程中，所有子线程的进程号相同；多进程中，不同的子进程的进程号不同。</p>
+<a id="more"></a>
+
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>进程的子任务称为线程。</p>
+<h2 id="并行和并发"><a href="#并行和并发" class="headerlink" title="并行和并发"></a>并行和并发</h2><h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>是计算机系统中能同时执行两个或更多个处理的一种计算方法。并行处理可同时工作于同一程序的不同方面。并行处理的主要目的是节省大型和复杂问题的解决时间。</p>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>指一个时间段中有几个程序都处于已启动运行到运行完毕之间，且这几个程序都是在同一个处理机（CPU）上运行，但任意时刻点上只有一个程序在处理机（CPU）上运行</p>
+<h2 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h2><h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>指一个进程在执行某个请求的时候，若该请求需要一段时间才能返回信息，那么这个进程将会一直等待下去，知道收到返回信息才会继续执行下去。</p>
+<h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>指线程不需要一直等待下去，而是继续执行下面的操作，不管其他进程的状态，当有消息返回时系统会通知进程进行处理，这样可以提高执行效率。</p>
+<h2 id="GIL"><a href="#GIL" class="headerlink" title="GIL"></a>GIL</h2><p>GIL 是 CPython 引入的一个概念</p>
+<p>GIL 并不是 Python 的特性，Python 完全可以不依赖于 GIL。</p>
+<p>Python 中由于 GIL 的存在，在多线程时并没有真正的进行多线程计算。GIL 说白了就是伪多线程，一个线程运行其他线程阻塞，使得多线程代码不是同时执行，而是交替执行。</p>
+<p>多线程可能反而会慢，原因可以参考 pcode数量的调度方式</p>
+<p>GIL多线程的不足，其实是对计算密集型的不足，这个解决可以利用多进程进行解决，而对于IO密集型的任务，还是可以使用多线程进行提升效率。</p>
+<h2 id="计算密集型和-IO密集型"><a href="#计算密集型和-IO密集型" class="headerlink" title="计算密集型和 IO密集型"></a>计算密集型和 IO密集型</h2><h3 id="计算密集型"><a href="#计算密集型" class="headerlink" title="计算密集型"></a>计算密集型</h3><p>就是应用非常多的 CPU 计算资源，在计算密集型任务的特点是要进行大量的计算，消耗 CPU 资源。</p>
+<h3 id="IO密集型"><a href="#IO密集型" class="headerlink" title="IO密集型"></a>IO密集型</h3><p>对于IO密集型的应用，涉及到网络、磁盘IO的任务都是IO密集型任务，大多消耗都是硬盘读写和网络传输的消耗。</p>
+<h2 id="线程锁"><a href="#线程锁" class="headerlink" title="线程锁"></a>线程锁</h2><p>多线程程序涉及到一个问题，就是当不同线程要对同一个资源进行修改或利用时会出现混乱，所以有必要引入线程锁。</p>
+<p>要注意创建线程也是需要时间的。</p>
+<p>线程锁也称互斥锁，可以弥补部分线程安全问题。</p>
+<p>当多个线程几乎同时修改某一个共享数据的时候，需要进行同步控制。</p>
+<p>线程同步能够保证多个线程安全访问竞争资源，最简单的同步机制是引入互斥锁。</p>
+<p>互斥锁为资源引入一个状态：锁定/非锁定。</p>
+<p>某个线程要更改共享数据时，先将其锁定，此时资源的状态为锁定，其他线程不能更改；直到该线程释放资源，将资源的状态变成非锁定，其他的线程才能再次锁定该资源。互斥锁保证了每次只有一个线程进行写入操作，从而保证了多线程情况下数据的正确性。</p>
+
     </div>
 
     
@@ -235,7 +262,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://czp-first.github.io/2020/05/05/python%E5%9F%BA%E7%A1%80/" title="python基础">https://czp-first.github.io/2020/05/05/python基础/</a>
+    <a href="https://czp-first.github.io/2020/05/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E8%BF%9B%E7%A8%8B/" title="多线程和多进程">https://czp-first.github.io/2020/05/05/多线程和多进程/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -245,6 +272,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="tag"># 计算机基础</a>
+          </div>
 
         
 
@@ -314,6 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多线程和多进程"><span class="nav-number">1.</span> <span class="nav-text">多线程和多进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程"><span class="nav-number">1.1.</span> <span class="nav-text">进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">1.1.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">1.1.2.</span> <span class="nav-text">线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并行和并发"><span class="nav-number">1.2.</span> <span class="nav-text">并行和并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并行"><span class="nav-number">1.2.1.</span> <span class="nav-text">并行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发"><span class="nav-number">1.2.2.</span> <span class="nav-text">并发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步和异步"><span class="nav-number">1.3.</span> <span class="nav-text">同步和异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">1.3.1.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步"><span class="nav-number">1.3.2.</span> <span class="nav-text">异步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIL"><span class="nav-number">1.4.</span> <span class="nav-text">GIL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算密集型和-IO密集型"><span class="nav-number">1.5.</span> <span class="nav-text">计算密集型和 IO密集型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算密集型"><span class="nav-number">1.5.1.</span> <span class="nav-text">计算密集型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO密集型"><span class="nav-number">1.5.2.</span> <span class="nav-text">IO密集型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程锁"><span class="nav-number">1.6.</span> <span class="nav-text">线程锁</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -329,7 +360,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -342,7 +373,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
