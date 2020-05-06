@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="Asia/Shanghai">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"czp-first.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="内置函数内置函数说明">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内置函数">
+<meta property="og:url" content="https://czp-first.github.io/2020/05/06/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="czp_first">
+<meta property="og:description" content="内置函数内置函数说明">
+<meta property="article:published_time" content="2020-05-06T01:31:58.000Z">
+<meta property="article:modified_time" content="2020-05-06T01:51:34.000Z">
+<meta property="article:author" content="czp">
+<meta property="article:tag" content="python基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://czp-first.github.io/2020/05/06/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'Asia/Shanghai'
+  };
+</script>
+
+  <title>内置函数 | czp_first</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">czp_first</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">gogogo</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="Asia/Shanghai">
+    <link itemprop="mainEntityOfPage" href="https://czp-first.github.io/2020/05/06/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/kobe.jpeg">
+      <meta itemprop="name" content="czp">
+      <meta itemprop="description" content="To Be Better">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="czp_first">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          内置函数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-05-06 09:31:58 / Modified: 09:51:34" itemprop="dateCreated datePublished" datetime="2020-05-06T09:31:58+08:00">2020-05-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h1><p>内置函数说明</p>
+<a id="more"></a>
+
+<h2 id="abs"><a href="#abs" class="headerlink" title="abs"></a>abs</h2><p>求绝对值</p>
+<h2 id="all"><a href="#all" class="headerlink" title="all"></a>all</h2><p>all() 函数用于判断给定的可迭代参数 iterable 中的所有元素是否都为 TRUE，如果是返回 True，否则返回 False。<br>元素除了是 0、空、None、False 外都算 True。</p>
+<h2 id="any"><a href="#any" class="headerlink" title="any"></a>any</h2><p>any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。<br>元素除了是 0、空、FALSE 外都算 TRUE。</p>
+<h2 id="basestring"><a href="#basestring" class="headerlink" title="basestring"></a>basestring</h2><p>basestring() 方法是 str 和 unicode 的超类（父类），也是抽象类，因此不能被调用和实例化，但可以被用来判断一个对象是否为 str 或者 unicode 的实例，isinstance(obj, basestring) 等价于 isinstance(obj, (str, unicode))。</p>
+<h2 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h2><p>bin() 返回一个整数 int 或者长整数 long int 的二进制表示。</p>
+<h2 id="bool"><a href="#bool" class="headerlink" title="bool"></a>bool</h2><p>bool() 函数用于将给定参数转换为布尔类型，如果没有参数，返回 False。<br>bool 是 int 的子类。</p>
+<h2 id="bytearray"><a href="#bytearray" class="headerlink" title="bytearray"></a>bytearray</h2><p>bytearray() 方法返回一个新字节数组。这个数组里的元素是可变的，并且每个元素的值范围: 0 &lt;= x &lt; 256。</p>
+<h2 id="callable"><a href="#callable" class="headerlink" title="callable"></a>callable</h2><p>callable() 函数用于检查一个对象是否是可调用的。如果返回 True，object 仍然可能调用失败；但如果返回 False，调用对象 object 绝对不会成功。<br>对于函数、方法、lambda 函式、 类以及实现了 __call__ 方法的类实例, 它都返回 True。</p>
+<h2 id="chr"><a href="#chr" class="headerlink" title="chr"></a>chr</h2><p>chr() 用一个范围在 range（256）内的（就是0～255）整数作参数，返回一个对应的字符。<br>chr(i)<br>    i – 可以是10进制也可以是16进制的形式的数字。<br>返回值是当前整数对应的 ASCII 字符。</p>
+<h2 id="classmethod"><a href="#classmethod" class="headerlink" title="classmethod"></a>classmethod</h2><p>classmethod 修饰符对应的函数不需要实例化，不需要 self 参数，但第一个参数需要是表示自身类的 cls 参数，可以来调用类的属性，类的方法，实例化对象等。</p>
+<h2 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h2><p>cmp(x,y) 函数用于比较2个对象，如果 x &lt; y 返回 -1, 如果 x == y 返回 0, 如果 x &gt; y 返回 1。</p>
+<h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><p>compile() 函数将一个字符串编译为字节代码。</p>
+<h2 id="complex"><a href="#complex" class="headerlink" title="complex"></a>complex</h2><p>complex() 函数用于创建一个值为 real + imag * j 的复数或者转化一个字符串或数为复数。如果第一个参数为字符串，则不需要指定第二个参数<br>class complex([real[, imag]])<br>    real – int, long, float或字符串；<br>    imag – int, long, float；</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>complex(1, 2)<br>(1 + 2j)<br>complex(1)    # 数字<br>(1 + 0j)<br>complex(“1”)  # 当做字符串处理<br>(1 + 0j)<br>注意：这个地方在”+”号两边不能有空格，也就是不能写成”1 + 2j”，应该是”1+2j”，否则会报错<br>complex(“1+2j”)<br>(1 + 2j)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="delattr"><a href="#delattr" class="headerlink" title="delattr"></a>delattr</h2><p>delattr 函数用于删除属性。<br>delattr(x, ‘foobar’) 相等于 del x.foobar</p>
+<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><p>dict() 函数用于创建一个字典。<br>class dict(*<em>kwarg)<br>class dict(mapping, *</em>kwarg)<br>class dict(iterable, **kwarg)</p>
+<h2 id="dir"><a href="#dir" class="headerlink" title="dir"></a>dir</h2><p>列出指定类或模块包含的全部内容（包括函数、方法、类、变量等）。<br>dir() 函数不带参数时，返回当前范围内的变量、方法和定义的类型列表；带参数时，返回参数的属性、方法列表。如果参数包含方法<strong>dir</strong>()，该方法将被调用。如果参数不包含<strong>dir</strong>()，该方法将最大限度地收集参数信息。</p>
+<h2 id="divmod"><a href="#divmod" class="headerlink" title="divmod"></a>divmod</h2><h2 id="enumerate"><a href="#enumerate" class="headerlink" title="enumerate"></a>enumerate</h2><h2 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h2><h2 id="execfile"><a href="#execfile" class="headerlink" title="execfile"></a>execfile</h2><h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><h2 id="float"><a href="#float" class="headerlink" title="float"></a>float</h2><h2 id="format"><a href="#format" class="headerlink" title="format"></a>format</h2><h2 id="frozenset"><a href="#frozenset" class="headerlink" title="frozenset"></a>frozenset</h2><h2 id="getattr"><a href="#getattr" class="headerlink" title="getattr"></a>getattr</h2><h2 id="globals"><a href="#globals" class="headerlink" title="globals"></a>globals</h2><p>返回全局范围内所有变量组成的 “变量字典”</p>
+<h2 id="hasattr"><a href="#hasattr" class="headerlink" title="hasattr"></a>hasattr</h2><h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><p>查看某个函数或方法的帮助文档</p>
+<h2 id="hex"><a href="#hex" class="headerlink" title="hex"></a>hex</h2><h2 id="id"><a href="#id" class="headerlink" title="id"></a>id</h2><p>返回变量所引用的对象的内存地址</p>
+<h2 id="input"><a href="#input" class="headerlink" title="input"></a>input</h2><p>用于向用户生成一条提示，然后获取用户输入的内容</p>
+<p>总是返回一个字符串</p>
+<h2 id="int"><a href="#int" class="headerlink" title="int"></a>int</h2><h2 id="isinstance"><a href="#isinstance" class="headerlink" title="isinstance"></a>isinstance</h2><p>用于判断某个变量是否为指定类型的实例</p>
+<h2 id="issubclass"><a href="#issubclass" class="headerlink" title="issubclass"></a>issubclass</h2><h2 id="iter"><a href="#iter" class="headerlink" title="iter"></a>iter</h2><p>将列表、元组等转换成迭代器</p>
+<h2 id="len"><a href="#len" class="headerlink" title="len"></a>len</h2><ul>
+<li>字符串：获取长度</li>
+</ul>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><p>可用于将元组、区间（range）等对象转换为列表</p>
+<h2 id="locals"><a href="#locals" class="headerlink" title="locals"></a>locals</h2><p>返回当前局部范围内所有变量组成的 “变量字典”</p>
+<h2 id="long"><a href="#long" class="headerlink" title="long"></a>long</h2><h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><h2 id="max"><a href="#max" class="headerlink" title="max"></a>max</h2><ul>
+<li>字符串：获取字符串中最小字符和最大字符</li>
+</ul>
+<h2 id="memoryview"><a href="#memoryview" class="headerlink" title="memoryview"></a>memoryview</h2><h2 id="min"><a href="#min" class="headerlink" title="min"></a>min</h2><h2 id="next"><a href="#next" class="headerlink" title="next"></a>next</h2><h2 id="object"><a href="#object" class="headerlink" title="object"></a>object</h2><h2 id="oct"><a href="#oct" class="headerlink" title="oct"></a>oct</h2><h2 id="open"><a href="#open" class="headerlink" title="open"></a>open</h2><h2 id="ord"><a href="#ord" class="headerlink" title="ord"></a>ord</h2><p>ord() 函数是 chr() 函数（对于8位的ASCII字符串）或 unichr() 函数（对于Unicode对象）的配对函数，它以一个字符（长度为1的字符串）作为参数，返回对应的 ASCII 数值，或者 Unicode 数值，如果所给的 Unicode 字符超出了你的 Python 定义范围，则会引发一个 TypeError 的异常。</p>
+<h2 id="pow"><a href="#pow" class="headerlink" title="pow"></a>pow</h2><h2 id="print"><a href="#print" class="headerlink" title="print"></a>print</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(value, ..., sep=<span class="string">' '</span>, end=<span class="string">"\n"</span>, file=sys.stdout, flush=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># sep: 分隔符</span></span><br><span class="line"><span class="comment"># end: 结尾</span></span><br><span class="line"><span class="comment"># file: 指定print函数的输出目标，file参数的默认值为sys.stdout, 该默认值代表了系统标准输出，也就是屏幕，</span></span><br><span class="line"><span class="comment"># 因此print函数默认输出到屏幕。实际上，可以通过改变该参数让print函数输出到特定文件中</span></span><br><span class="line"><span class="comment"># flush: 用于控制输出的缓存，该参数一般保持为False即可，这样可以获得较好的性能</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">"print.txt"</span>, <span class="string">"w"</span>)</span><br><span class="line">print(<span class="string">"两情若是长久时"</span>, file=f)</span><br><span class="line">print(<span class="string">"又岂在朝朝暮暮"</span>, file=f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="property"><a href="#property" class="headerlink" title="property"></a>property</h2><h2 id="range"><a href="#range" class="headerlink" title="range"></a>range</h2><h2 id="raw-input"><a href="#raw-input" class="headerlink" title="raw_input"></a>raw_input</h2><h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h2><h2 id="reload"><a href="#reload" class="headerlink" title="reload"></a>reload</h2><h2 id="repr"><a href="#repr" class="headerlink" title="repr"></a>repr</h2><ul>
+<li>将其他类型转为字符串</li>
+<li>以python表达式的形式来表示值</li>
+</ul>
+<h2 id="reversed"><a href="#reversed" class="headerlink" title="reversed"></a>reversed</h2><p>该函数可接受各种序列（元组、列表、区间等）参数，然后返回一个”反序排列”的迭代器，该函数对参数本身不会产生任何影响</p>
+<h2 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h2><h2 id="round"><a href="#round" class="headerlink" title="round"></a>round</h2><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><h2 id="setattr"><a href="#setattr" class="headerlink" title="setattr"></a>setattr</h2><h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><h2 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h2><p>排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">my_list = [<span class="string">"fkit"</span>, <span class="string">"crazyit"</span>, <span class="string">"Charlie"</span>, <span class="string">"fox"</span>, <span class="string">"Emily"</span>]</span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> sorted(my_list, key=len, reverse=<span class="literal">True</span>):</span><br><span class="line">    print(s)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="staticmethod"><a href="#staticmethod" class="headerlink" title="staticmethod"></a>staticmethod</h2><h2 id="str"><a href="#str" class="headerlink" title="str"></a>str</h2><p>将其他类型转为字符串</p>
+<h2 id="sum"><a href="#sum" class="headerlink" title="sum"></a>sum</h2><h2 id="super"><a href="#super" class="headerlink" title="super"></a>super</h2><h2 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h2><p>可用于将列表、区间（range）等对象转换为元组</p>
+<h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><h2 id="unichr"><a href="#unichr" class="headerlink" title="unichr"></a>unichr</h2><h2 id="unicode"><a href="#unicode" class="headerlink" title="unicode"></a>unicode</h2><h2 id="vars"><a href="#vars" class="headerlink" title="vars"></a>vars</h2><p>获取在指定对象范围内所有变量组成的 “变量字典”。如果不传入object参数，vars() 和locals() 的作用完全相同</p>
+<h2 id="xrange"><a href="#xrange" class="headerlink" title="xrange"></a>xrange</h2><h2 id="zip-1"><a href="#zip-1" class="headerlink" title="zip"></a>zip</h2><p>可以把两个列表”压缩” 成一个zip对象（可迭代对象）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]</span><br><span class="line">b = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">print([x <span class="keyword">for</span> x <span class="keyword">in</span> zip(a, b)])</span><br></pre></td></tr></table></figure>
+
+<p>如果zip函数压缩的两个列表长度不相等，那么zip函数将以长度更短的列表为准</p>
+<p>zip不仅可以压缩两个列表，也可以压缩多个列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = [<span class="number">0.1</span>, <span class="number">0.2</span>]</span><br><span class="line">print([x <span class="keyword">for</span> x <span class="keyword">in</span> zip(a, b, c)])</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="import"><a href="#import" class="headerlink" title="__import__"></a>__import__</h2><h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><h2 id="buffer"><a href="#buffer" class="headerlink" title="buffer"></a>buffer</h2><h2 id="coerce"><a href="#coerce" class="headerlink" title="coerce"></a>coerce</h2><h2 id="intern"><a href="#intern" class="headerlink" title="intern"></a>intern</h2>
+    </div>
+
+    
+    
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>czp
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://czp-first.github.io/2020/05/06/%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/" title="内置函数">https://czp-first.github.io/2020/05/06/内置函数/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python%E5%9F%BA%E7%A1%80/" rel="tag"># python基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/05/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="prev" title="多线程和多进程">
+      <i class="fa fa-chevron-left"></i> 多线程和多进程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内置函数"><span class="nav-number">1.</span> <span class="nav-text">内置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#abs"><span class="nav-number">1.1.</span> <span class="nav-text">abs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#all"><span class="nav-number">1.2.</span> <span class="nav-text">all</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#any"><span class="nav-number">1.3.</span> <span class="nav-text">any</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basestring"><span class="nav-number">1.4.</span> <span class="nav-text">basestring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bin"><span class="nav-number">1.5.</span> <span class="nav-text">bin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bool"><span class="nav-number">1.6.</span> <span class="nav-text">bool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bytearray"><span class="nav-number">1.7.</span> <span class="nav-text">bytearray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#callable"><span class="nav-number">1.8.</span> <span class="nav-text">callable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chr"><span class="nav-number">1.9.</span> <span class="nav-text">chr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#classmethod"><span class="nav-number">1.10.</span> <span class="nav-text">classmethod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmp"><span class="nav-number">1.11.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compile"><span class="nav-number">1.12.</span> <span class="nav-text">compile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.13.</span> <span class="nav-text">complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delattr"><span class="nav-number">1.14.</span> <span class="nav-text">delattr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dict"><span class="nav-number">1.15.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dir"><span class="nav-number">1.16.</span> <span class="nav-text">dir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#divmod"><span class="nav-number">1.17.</span> <span class="nav-text">divmod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enumerate"><span class="nav-number">1.18.</span> <span class="nav-text">enumerate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eval"><span class="nav-number">1.19.</span> <span class="nav-text">eval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#execfile"><span class="nav-number">1.20.</span> <span class="nav-text">execfile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-number">1.21.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filter"><span class="nav-number">1.22.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float"><span class="nav-number">1.23.</span> <span class="nav-text">float</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#format"><span class="nav-number">1.24.</span> <span class="nav-text">format</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#frozenset"><span class="nav-number">1.25.</span> <span class="nav-text">frozenset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getattr"><span class="nav-number">1.26.</span> <span class="nav-text">getattr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#globals"><span class="nav-number">1.27.</span> <span class="nav-text">globals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hasattr"><span class="nav-number">1.28.</span> <span class="nav-text">hasattr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash"><span class="nav-number">1.29.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#help"><span class="nav-number">1.30.</span> <span class="nav-text">help</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hex"><span class="nav-number">1.31.</span> <span class="nav-text">hex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#id"><span class="nav-number">1.32.</span> <span class="nav-text">id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#input"><span class="nav-number">1.33.</span> <span class="nav-text">input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#int"><span class="nav-number">1.34.</span> <span class="nav-text">int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isinstance"><span class="nav-number">1.35.</span> <span class="nav-text">isinstance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#issubclass"><span class="nav-number">1.36.</span> <span class="nav-text">issubclass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iter"><span class="nav-number">1.37.</span> <span class="nav-text">iter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#len"><span class="nav-number">1.38.</span> <span class="nav-text">len</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">1.39.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#locals"><span class="nav-number">1.40.</span> <span class="nav-text">locals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#long"><span class="nav-number">1.41.</span> <span class="nav-text">long</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">1.42.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max"><span class="nav-number">1.43.</span> <span class="nav-text">max</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memoryview"><span class="nav-number">1.44.</span> <span class="nav-text">memoryview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#min"><span class="nav-number">1.45.</span> <span class="nav-text">min</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next"><span class="nav-number">1.46.</span> <span class="nav-text">next</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#object"><span class="nav-number">1.47.</span> <span class="nav-text">object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oct"><span class="nav-number">1.48.</span> <span class="nav-text">oct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#open"><span class="nav-number">1.49.</span> <span class="nav-text">open</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ord"><span class="nav-number">1.50.</span> <span class="nav-text">ord</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pow"><span class="nav-number">1.51.</span> <span class="nav-text">pow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#print"><span class="nav-number">1.52.</span> <span class="nav-text">print</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#property"><span class="nav-number">1.53.</span> <span class="nav-text">property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range"><span class="nav-number">1.54.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#raw-input"><span class="nav-number">1.55.</span> <span class="nav-text">raw_input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reduce"><span class="nav-number">1.56.</span> <span class="nav-text">reduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reload"><span class="nav-number">1.57.</span> <span class="nav-text">reload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repr"><span class="nav-number">1.58.</span> <span class="nav-text">repr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reversed"><span class="nav-number">1.59.</span> <span class="nav-text">reversed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zip"><span class="nav-number">1.60.</span> <span class="nav-text">zip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#round"><span class="nav-number">1.61.</span> <span class="nav-text">round</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">1.62.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setattr"><span class="nav-number">1.63.</span> <span class="nav-text">setattr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slice"><span class="nav-number">1.64.</span> <span class="nav-text">slice</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sorted"><span class="nav-number">1.65.</span> <span class="nav-text">sorted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#staticmethod"><span class="nav-number">1.66.</span> <span class="nav-text">staticmethod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str"><span class="nav-number">1.67.</span> <span class="nav-text">str</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum"><span class="nav-number">1.68.</span> <span class="nav-text">sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#super"><span class="nav-number">1.69.</span> <span class="nav-text">super</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple"><span class="nav-number">1.70.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">1.71.</span> <span class="nav-text">type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unichr"><span class="nav-number">1.72.</span> <span class="nav-text">unichr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unicode"><span class="nav-number">1.73.</span> <span class="nav-text">unicode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vars"><span class="nav-number">1.74.</span> <span class="nav-text">vars</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xrange"><span class="nav-number">1.75.</span> <span class="nav-text">xrange</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zip-1"><span class="nav-number">1.76.</span> <span class="nav-text">zip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#import"><span class="nav-number">1.77.</span> <span class="nav-text">__import__</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apply"><span class="nav-number">1.78.</span> <span class="nav-text">apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buffer"><span class="nav-number">1.79.</span> <span class="nav-text">buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#coerce"><span class="nav-number">1.80.</span> <span class="nav-text">coerce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intern"><span class="nav-number">1.81.</span> <span class="nav-text">intern</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="czp"
+      src="/images/kobe.jpeg">
+  <p class="site-author-name" itemprop="name">czp</p>
+  <div class="site-description" itemprop="description">To Be Better</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+    <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34383253&auto=1&height=66"></iframe>
+    </div>
+  </aside>
+  
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">czp</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+
+<!-- 不蒜子统计 -->
+<span id="busuanzi_container_site_pv">
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+
+</html>
