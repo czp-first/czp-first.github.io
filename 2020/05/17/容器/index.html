@@ -20,15 +20,16 @@
     var CONFIG = {"hostname":"czp-first.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="To Be Better">
+  <meta name="description" content="容器基本管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="容器">
 <meta property="og:url" content="https://czp-first.github.io/2020/05/17/%E5%AE%B9%E5%99%A8/index.html">
 <meta property="og:site_name" content="czp_first">
-<meta property="og:description" content="To Be Better">
+<meta property="og:description" content="容器基本管理">
 <meta property="article:published_time" content="2020-05-17T14:56:17.000Z">
-<meta property="article:modified_time" content="2020-05-17T14:56:17.665Z">
+<meta property="article:modified_time" content="2020-05-17T15:12:21.973Z">
 <meta property="article:author" content="czp">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://czp-first.github.io/2020/05/17/%E5%AE%B9%E5%99%A8/">
@@ -187,8 +188,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-05-17 22:56:17" itemprop="dateCreated datePublished" datetime="2020-05-17T22:56:17+08:00">2020-05-17</time>
+              <time title="Created: 2020-05-17 22:56:17 / Modified: 23:12:21" itemprop="dateCreated datePublished" datetime="2020-05-17T22:56:17+08:00">2020-05-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+                </span>
             </span>
 
           
@@ -209,7 +220,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>容器基本管理</p>
+<a id="more"></a>
+
+<ol>
+<li><p>容器的启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 交互式容器</span></span><br><span class="line">docker container run -it IMAGE ID</span><br><span class="line"><span class="meta">#</span><span class="bash"> i:交互式启动 t:开启一个终端</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果不起名字，会随机一个名字</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 不能启动同名的</span></span><br><span class="line"></span><br><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container run -it --name=czp_cent81 470671670cac</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> --rm:退出后容器自动删除</span></span><br><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container run -it --name=czp_nginx-v2 --rm nginx:1.14</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 守护式容器</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -d</span></span><br><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container run -d --name=czp_nginx nginx:1.14</span><br><span class="line">cf4cb15b729f3d575c0e5c5ad15499779823d27f39f80e5c78a42c0fc3249988</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -p</span></span><br><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container run -d -p 8080:80 --name=czp-nginx-80 nginx:1.14</span><br></pre></td></tr></table></figure>
+
+
+
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker container ls</span><br><span class="line">docker container ls -a</span><br><span class="line"></span><br><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container ls</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS              PORTS               NAMES</span><br><span class="line">247e03e466f2        470671670cac        "/bin/bash"         About a minute ago   Up About a minute                       focused_haslett</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> CONTAINER ID:容器的唯一号码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> STATUS:容器的运行状态（Exited、Up）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> NAMES:容器的名字（可以自动，也可以手工指定）</span></span><br></pre></td></tr></table></figure>
+
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查询容器的详细信息</span></span><br><span class="line">docker container inspect CONTAINER ID/NAME</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li><p>容器的应用场景</p>
+<p>交互式的容器：工具类：开发、测试、临时性的任务</p>
+<p>守护式容器：网络服务</p>
+</li>
+<li><p>容器的启动/关闭/连接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -i:交互式启动，否则后台启动</span></span><br><span class="line">docker container start -i CONTAINER ID</span><br><span class="line"></span><br><span class="line">docker container stop CONTAINER ID</span><br><span class="line">docker container kill CONTAINER ID</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 容器的连接方法</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1</span></span><br><span class="line">docker container attach CONTAINER ID</span><br><span class="line"><span class="meta">#</span><span class="bash"> 2 子进程的方式登录（在已有工作容器中生成子进程，做登录，可以进行容器的调试，退出时也不会影响到当前容器）</span></span><br><span class="line">docker exec -it CONTAINER ID /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>容器的删除</p>
+<ol>
+<li><p>单个</p>
+</li>
+<li><p>批量删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container rm -f `docker container ls -a -q`</span><br><span class="line">cd928ac79832</span><br><span class="line">a133561e92cd</span><br><span class="line">247e03e466f2</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
+</ol>
+<ol start="5">
+<li><p>docker容器的网络访问</p>
+<p>指定映射（docker会自动添加一条iptables规则来实现端口映射）</p>
+<p>-p hostPort:containerPort</p>
+<p>-p ip:hostPort:containerPort</p>
+<p>-p ip::containerPort(随机端口)</p>
+<p>-p hostPort:containerPort/udp</p>
+<p>-p 81:80 -p 443:443</p>
+<p>随机映射</p>
+<p>docker run -p 80(随机端口:32768-60999)</p>
+<p>允许多端口映射</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container run -d -p 8080:80 -p 3306:3306 --name=czp-nginx-80</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>容器进程管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dxchains-MacBook-Pro-2:~ dxchain$ docker container top 3fbac87d7746</span><br><span class="line">PID                 USER                TIME                COMMAND</span><br><span class="line">3837                root                0:00                nginx: master process nginx -g daemon off;</span><br><span class="line">3877                101                 0:00                nginx: worker process</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>容器日志</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker container logs 3fbac87d7746</span><br><span class="line">docker container logs -f 3fbac87d7746</span><br><span class="line">docker container logs -t 3fbac87d7746</span><br><span class="line">docker container logs -tf --tail 10 3fbac87d7746</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>拷贝文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container cp path path</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>volume实现宿主机和容器的数据共享</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dxchains-MacBook-Pro-2:html dxchain$ docker container run -d -p 81:80 --name=n2 -v ~/Desktop/study/docker/html:/usr/share/nginx/html nginx</span><br><span class="line">e53b87b8760207fef16a9e8edcaeef87a56bcce69712e527c7290743638014b3</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 作用：数据持久化</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例子：开启两个nginx容器（90，91），共同挂载一个数据卷，实现静态资源共享</span></span><br></pre></td></tr></table></figure>
+
+<p>查看容器数据卷挂载路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker container inspect</span><br><span class="line"><span class="meta">#</span><span class="bash"> Mounts</span></span><br></pre></td></tr></table></figure>
+
+<p>数据卷容器</p>
+<p>作用：在集中管理集群中，大批量的容器都需要挂载相同的多个数据卷时，可以采用数据卷容器进行统一管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 宿主机</span></span><br><span class="line">mkdir -p volume/a</span><br><span class="line">mkdir -p volume/b</span><br><span class="line">touch volume/a/a.txt</span><br><span class="line">touch volume/b/b.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动数据卷容器</span></span><br><span class="line">docker container run -it --name nginx_volume -v ~/Desktop/study/docker/volume/a:/opt/a -v ~/Desktop/study/docker/volume/b:/opt/b centos:6.9 bash</span><br><span class="line"><span class="meta">#</span><span class="bash"> ctrl p q</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用数据卷容器</span></span><br><span class="line">docker run -d -p 8085:80 --volumes-from nginx_volume --name n8085 nginx</span><br><span class="line">docker run -d -p 8086:80 --volumes-from nginx_volume --name n8086 nginx</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+
     </div>
 
     
@@ -245,6 +335,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+          </div>
 
         
 
