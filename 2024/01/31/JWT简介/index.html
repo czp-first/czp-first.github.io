@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>JWT简介 - Rey&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Rey&#039;s Blog"><meta name="msapplication-TileImage" content="https://avatars.githubusercontent.com/u/41515641?v=4"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Rey&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="JWT简介。"><meta property="og:type" content="blog"><meta property="og:title" content="JWT简介"><meta property="og:url" content="https://czp-first.github.io/2024/01/31/JWT%E7%AE%80%E4%BB%8B/"><meta property="og:site_name" content="Rey&#039;s Blog"><meta property="og:description" content="JWT简介。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.auth0.com/website/jwt/introduction/client-credentials-grant.png"><meta property="og:image" content="https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png"><meta property="article:published_time" content="2024-01-31T03:13:42.000Z"><meta property="article:modified_time" content="2024-01-31T03:13:42.000Z"><meta property="article:author" content="Rey"><meta property="article:tag" content="jwt"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn.auth0.com/website/jwt/introduction/client-credentials-grant.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://czp-first.github.io/2024/01/31/JWT%E7%AE%80%E4%BB%8B/"},"headline":"JWT简介","image":["https://cdn.auth0.com/website/jwt/introduction/client-credentials-grant.png","https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png"],"datePublished":"2024-01-31T03:13:42.000Z","dateModified":"2024-01-31T03:13:42.000Z","author":{"@type":"Person","name":"Rey"},"publisher":{"@type":"Organization","name":"Rey's Blog","logo":{"@type":"ImageObject","url":"https://avatars.githubusercontent.com/u/41515641?v=4"}},"description":"JWT简介。"}</script><link rel="canonical" href="https://czp-first.github.io/2024/01/31/JWT%E7%AE%80%E4%BB%8B/"><link rel="icon" href="https://avatars.githubusercontent.com/u/41515641?v=4"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="https://avatars.githubusercontent.com/u/41515641?v=4" alt="Rey&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/czp-first"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-01-31T03:13:42.000Z" title="2024/1/31 11:13:42">2024-01-31</time>发表</span><span class="level-item"><time dateTime="2024-01-31T03:13:42.000Z" title="2024/1/31 11:13:42">2024-01-31</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/http/">http</a></span><span class="level-item">14 分钟读完 (大约2163个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">JWT简介</h1><div class="content"><h1 id="什么是-JSON-Web-Token"><a href="#什么是-JSON-Web-Token" class="headerlink" title="什么是 JSON Web Token?"></a>什么是 JSON Web Token?</h1><p>JSON Web Token(JWT)是一种开放标准(<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc7519">RFC 7519</a>)，他定义了一种紧凑且独立的方式，用于在各方之间以JSON对象的形式安全地传输信息。该信息可以被验证和信任，因为它是经过数字签名的。JWT可以使用密钥（使用HMAC算法）或使用RSA或ECDSA的公钥&#x2F;私钥对进行签名。</p>
+<p>尽管JWT可以加密以在各方之间提供保密性，但我们将重点关注签名令牌。签名令牌可以验证其中包含的声明的完整性，而加密令牌则向其他方隐藏这些声明。当使用公钥&#x2F;私钥对对令牌进行签名时，签名还证明只有持有私钥的一方才是对其进行签名的一方。</p>
+<h1 id="什么使用应该使用-JSON-Web-Token？"><a href="#什么使用应该使用-JSON-Web-Token？" class="headerlink" title="什么使用应该使用 JSON Web Token？"></a>什么使用应该使用 JSON Web Token？</h1><p>以下是JSON Web Token有用的一些场景：</p>
+<ul>
+    <li>认证：这是使用JWT最常见的场景。用户登录后，每个后续请求都将包含JWT，从而允许用户访问该令牌允许的路由、服务和资源。`单点登录`是当今广泛使用JWT的一项功能，因为它的开销很小并且能够轻松地跨不同域使用。</li>
+
+<li>信息交换：JSON Web Token是在各方之间安全传输信息的好方法。因为JWT可以进行签名（例如，使用公钥/私钥对），所以您可以确定发送者就是他们所说的人。此外，由于签名是使用header和payload计算的，因此您还可以验证内容是否被篡改。</li>
+
+</ul>
+
+<h1 id="JSON-Web-Token结构是什么？"><a href="#JSON-Web-Token结构是什么？" class="headerlink" title="JSON Web Token结构是什么？"></a>JSON Web Token结构是什么？</h1><p>在其紧凑形式中，JSON Web Token由用点（<code>.</code>）分割的三个部分组成，它们是：</p>
+<ul>
+<li>Header</li>
+<li>Payload</li>
+<li>Signature</li>
+</ul>
+<p>因此，JWT通常看起来像这样：<code>xxxx.yyyy.zzzz</code></p>
+<p>让我们来看一看每一部分。</p>
+<h2 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h2><p>header通常由两部分组成：令牌的类型（JWT）和所使用的签名算法（例如HMAC SHA256或RSA）。</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">	&quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，对该JSON进行BaseUrl编码以形成JWT的第一部分。</p>
+<h2 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h2><p>token的第二部分是payload，其中包含声明（claims）。声明是关于实体（通常是用户）和附加数据的声明。声明分为三种类型：注册声明、公共声明和私人声明。</p>
+<p>注册声明：这些是一组预定义的声明，不是强制性的，而是推荐的，以提供一组有用的、可互操作的声明。其中一些是：iss（发行者）、exp（到期时间）、sub（主题）、aud（受众）等。</p>
+<p>公共声明：这些可以由使用JWT的人随意定义。但为了避免冲突，它们应该在<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/jwt/jwt.xhtml">IANA JSON Web Token Registry</a>中定义，或者定义为包含放冲突命名空间的URI。</p>
+<p>私人声明：这些是为在同意使用它们的各方之间共享信息而创建的自定义声明，既不是注册声明也不是公开声明。</p>
+<p><code>请注意，声明名称只有三个字符长，因为JWT旨在紧凑。</code></p>
+<p>有效的payload可以是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;sub&quot;: &quot;12345&quot;,</span><br><span class="line">	&quot;name&quot;: &quot;Rey&quot;,</span><br><span class="line">	&quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后对payload进行Base64Url编码以形成JSON Web Token的第二部分。</p>
+<p><code>请注意，对于签名令牌，此信息虽然受到防止篡改的保护，但是任何人都可以读取。除非加密，否则请勿将蜜柑信息放入JWT的payload或header中。</code></p>
+<h2 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h2><p>要创建签名部分，您必须获取编码的header、编码的payload、密钥、header中指定的算法，然后对其进行签名。</p>
+<p>例如，如果要使用HMAC SHA256算法，则将通过以下方式创建签名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">	base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">	base64UrlEncode(payload),</span><br><span class="line">	secret</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>签名用于验证消息在传输过程中没有发生更改，并且在使用私钥签名的令牌的情况下，它还可以验证JWT的发送者是否是其所说的人。</p>
+<h2 id="将所有内容放在一起"><a href="#将所有内容放在一起" class="headerlink" title="将所有内容放在一起"></a>将所有内容放在一起</h2><p>输出是三个由点分隔的Base64-URL字符串，可以在HTML和HTTP环境中轻松传递，同时与基于XML的标准（例如SAML）相比更加紧凑。</p>
+<p>下面显示了一个JWT，它具有先前的header和payload编码，并且使用密钥进行签名。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+
+<p>如果您想使用<code>JWT</code>并将这些概念付诸实践，您可以使用 <a target="_blank" rel="noopener" href="https://jwt.io/#debugger-io">jwt.io Debugger</a>来解码、验证和生成JWT。</p>
+
+
+<h1 id="JSON-Web-Token如何工作？"><a href="#JSON-Web-Token如何工作？" class="headerlink" title="JSON Web Token如何工作？"></a>JSON Web Token如何工作？</h1><p>在身份验证中，当用户使用其凭据成功登录时，将返回 JSON Web Token。由于token是凭证因此必须非常小心地防止安全问题。一般来说，您保留token的时间不应超过所需时间。</p>
+<p><code>由于缺乏安全性，您也不应该将敏感会话数据存储在浏览器存储中。</code></p>
+<p>每当用户想要访问受保护的路由或资源时，用户应该发送JWT，通常使用<code>Bearer</code>模式在header中的<code>Authorization</code>中发送。header的内容应如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在某些情况下，这可以是无状态授权机制。服务器的受保护路由将检查<code>Authorization</code>标头中是否存在有效的JWT，如果存在，则将允许用于访问受保护的资源。如果JWT包含必要的数据，则可能会减少查询数据库以执行某些操作的需要，尽管情况可能并非总是如此。</p>
+<p>请注意，如果您通过HTTP标头发送JWT令牌，则应尽量防止它们变得太大。某些服务器不接受超过8KB的标头。如果您尝试在JWT令牌中嵌入太多信息（例如包含所有用户的权限），您可能需要替代解决方案，例如 <a target="_blank" rel="noopener" href="https://auth0.com/fine-grained-authorization">Auth0 Fine-Grained Authorization</a>。</p>
+<p>如果令牌在<code>Authorization</code>标头中发送，跨域资源共享将不会成为问题，因为它不使用 cookie。</p>
+<p>下图展示了如何获取JWT并用于访问API或资源：</p>
+<p><img src="https://cdn.auth0.com/website/jwt/introduction/client-credentials-grant.png"></p>
+<ol>
+<li>应用程序或客户端向服务器请求授权。这是通过不同的授权流程之一执行的。例如典型的<a target="_blank" rel="noopener" href="https://openid.net/developers/how-connect-works/">OpenID Connect</a>兼容Web应用程序将使用 <a target="_blank" rel="noopener" href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">authorization code flow</a> 通过<code>/oauth/authorize</code>端点。</li>
+<li>收于授权后，授权服务器将访问令牌返回给应用程序。</li>
+<li>应用程序使用访问令牌来访问受保护的资源（例如API）。</li>
+</ol>
+<p><code>请注意，使用签名令牌时，令牌中包含的所有信息都会向用户或其他方公开，即使它们无法更改它。这意味着您不应将敏感信息放入令牌中。</code></p>
+<h1 id="为什么我们应该使用JSON-Web-Token？"><a href="#为什么我们应该使用JSON-Web-Token？" class="headerlink" title="为什么我们应该使用JSON Web Token？"></a>为什么我们应该使用JSON Web Token？</h1><p>我们来谈谈 <strong>JSON Web Tokens(JWT)</strong> 与  <strong>Simple Web Tokens(SWT)</strong> 和 <strong>Security Assertion Markup Language Tokens(SAML)</strong> 相比的优势。</p>
+<p>由于JSON比XML更简洁，因此在编码时其大小也更小，使得JWT比SAML更紧凑。这使得JWT成为在HTML和HTTP环境中传递的不错选择。</p>
+<p>从安全角度来看，SWT只能使用HMAC算法通过共享密钥进行对称签名。但是，JWT和SAML令牌可以使用 X.509 证书形式的公钥&#x2F;私钥对进行签名。与简单签名相比，使用XML数字签名对XML进行签名而不引入安全漏洞是非常困难的。</p>
+<p>关于使用，JWT 用于互联网规模。这凸显了在多个平台（尤其是移动平台）上客户端处理 JSON Web Token 的简便性。</p>
+<p><img src="https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png"><br><em>编码的JWT和编码的SAML的长度比较</em></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://jwt.io/introduction">Introduction to JSON Web Tokens</a></li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>JWT简介</p><p><a href="https://czp-first.github.io/2024/01/31/JWT简介/">https://czp-first.github.io/2024/01/31/JWT简介/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Rey</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-01-31</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-01-31</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/jwt/">jwt</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_twitter"></a><a class="a2a_button_facebook"></a><a class="a2a_button_telegram"></a></div><script async src="https://static.addtoany.com/menu/page.js"></script><script src="https://static.addtoany.com/menu/page.js" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/02/01/Mac%E5%BF%AB%E6%8D%B7%E9%94%AE/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Mac快捷键</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/01/28/Apifox/"><span class="level-item">Apifox</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "afa231c43095bb66ac9a20cc24896feb",
+            repo: "czp-first.github.io",
+            owner: "czp-first",
+            clientID: "c2ae2e783a1702029f21",
+            clientSecret: "a27df0852abbecec1fa74ba967b8289fe3233831",
+            admin: ["czp-first"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://avatars.githubusercontent.com/u/41515641?v=4" alt="Rey"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Rey</p><p class="is-size-6 is-block">Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Earth, Solar System</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/czp-first" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/czp-first"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/apifox/"><span class="level-start"><span class="level-item">apifox</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/chrome/"><span class="level-start"><span class="level-item">chrome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/git/"><span class="level-start"><span class="level-item">git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/http/"><span class="level-start"><span class="level-item">http</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/npm/"><span class="level-start"><span class="level-item">npm</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/pc/"><span class="level-start"><span class="level-item">pc</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/python/"><span class="level-start"><span class="level-item">python</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/apifox/"><span class="tag">apifox</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/git/"><span class="tag">git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/jwt/"><span class="tag">jwt</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mac/"><span class="tag">mac</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysqlclient/"><span class="tag">mysqlclient</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/npm/"><span class="tag">npm</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pc/"><span class="tag">pc</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pip/"><span class="tag">pip</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pyenv/"><span class="tag">pyenv</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/python/"><span class="tag">python</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/registry/"><span class="tag">registry</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/virtualenv/"><span class="tag">virtualenv</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/virtualenvwrapper/"><span class="tag">virtualenvwrapper</span><span class="tag">1</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-02-19T01:42:30.000Z">2024-02-19</time></p><p class="title"><a href="/2024/02/19/%E5%88%87%E6%8D%A2git%E9%85%8D%E7%BD%AE/">切换git配置</a></p><p class="categories"><a href="/categories/git/">git</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-02-14T08:34:14.000Z">2024-02-14</time></p><p class="title"><a href="/2024/02/14/chrome%E5%BF%AB%E6%8D%B7%E9%94%AE/">chrome快捷键</a></p><p class="categories"><a href="/categories/chrome/">chrome</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-02-01T03:29:11.000Z">2024-02-01</time></p><p class="title"><a href="/2024/02/01/Mac%E5%BF%AB%E6%8D%B7%E9%94%AE/">Mac快捷键</a></p><p class="categories"><a href="/categories/pc/">pc</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-01-31T03:13:42.000Z">2024-01-31</time></p><p class="title"><a href="/2024/01/31/JWT%E7%AE%80%E4%BB%8B/">JWT简介</a></p><p class="categories"><a href="/categories/http/">http</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-01-28T07:54:00.000Z">2024-01-28</time></p><p class="title"><a href="/2024/01/28/Apifox/">Apifox</a></p><p class="categories"><a href="/categories/apifox/">apifox</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2024/02/"><span class="level-start"><span class="level-item">二月 2024</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/01/"><span class="level-start"><span class="level-item">一月 2024</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="https://avatars.githubusercontent.com/u/41515641?v=4" alt="Rey&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2024 Rey</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/czp-first"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
